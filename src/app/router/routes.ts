@@ -1,11 +1,19 @@
-// app/router/routes.ts
+// src/app/router/routes.ts
 import { HomePage } from '@pages/home'
+import { routesName } from './routesName'
 
-export const routes = [
-  { path: '/', name: 'home', component: HomePage },
+const routes = [
+  { path: '/', name: routesName.home, component: HomePage },
   {
     path: '/register',
-    name: 'register',
+    name: routesName.register,
     component: () => import('@pages/auth/ui/RegisterPage.vue'),
   },
+  {
+    path: '/login',
+    name: routesName.login,
+    component: () => import('@pages/auth/ui/LoginPage.vue'),
+  },
 ]
+
+export { routes }

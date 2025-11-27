@@ -1,1 +1,25 @@
 @import 'tailwindcss';
+
+body {
+  @apply min-h-screen m-0 p-2.5;
+
+  button {
+    cursor: pointer;
+  }
+}
+
+@theme {
+  /* Шрифты */
+  --font-causten: 'Causten', sans-serif;
+
+  /* Цвета */
+  --color-purple: #8a33fd;
+}
+
+@layer components {
+  .text-18 {
+    font-family: var(--font-causten);
+    font-weight: 500;
+    font-size: 18px;
+  }
+}
