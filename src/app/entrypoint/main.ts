@@ -1,4 +1,3 @@
-// app/entrypoint/main.ts
 import '@app/styles/main.css'
 
 import { createApp } from 'vue'

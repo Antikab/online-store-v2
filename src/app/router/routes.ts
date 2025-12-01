@@ -1,4 +1,3 @@
-// src/app/router/routes.ts
 import { HomePage } from '@pages/home'
 import { routesName } from './routesName'
 
