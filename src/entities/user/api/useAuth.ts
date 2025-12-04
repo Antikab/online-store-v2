@@ -7,11 +7,6 @@ type SignUpPayload = {
   firstName: string
 }
 
-// type SignInPayload = {
-//   email: string
-//   password: string
-// }
-
 function useAuth() {
   const { loading, errorMessage, handleRequest } = useRequest()
   const signUp = async ({ email, password, firstName }: SignUpPayload) => {

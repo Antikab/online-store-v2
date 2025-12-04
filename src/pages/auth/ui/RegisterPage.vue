@@ -1,20 +1,14 @@
 <script setup lang="ts">
-import { useForm, useField } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
-import { z } from 'zod'
+import { useForm, useField } from 'vee-validate'
 
 import { routesName } from '@app/router'
-import { useAuth } from '@entities/user/model/useAuth'
+import { signUpSchema } from '@/features/auth/model'
+import { useAuth } from '@/entities/user/api/useAuth'
 import { BaseButton } from '@/shared/ui'
 
-const schema = z.object({
-  email: z.email('Введите корректный e-mail').trim().toLowerCase(),
-  password: z.string().min(6, 'Минимум 6 символов').trim(),
-  firstName: z.string().min(3, 'Минимум 3 символа').trim().toLowerCase(),
-})
-
 const { handleSubmit } = useForm({
-  validationSchema: toTypedSchema(schema),
+  validationSchema: toTypedSchema(signUpSchema),
   initialValues: {
     email: '',
     password: '',
