@@ -2,6 +2,7 @@
 interface Props {
   textButton?: string
 }
+
 defineProps<Props>()
 </script>
 

@@ -6,6 +6,8 @@ body {
   button {
     cursor: pointer;
   }
+
+  background-color: #979393;
 }
 
 @theme {

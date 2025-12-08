@@ -1,7 +1,7 @@
 import { HomePage } from '@pages/home'
 import { routesName } from './routesName'
 
-const routes = [
+const routes  = [
   { path: '/', name: routesName.home, component: HomePage },
   {
     path: '/register',
@@ -13,6 +13,12 @@ const routes = [
     name: routesName.login,
     component: () => import('@pages/auth/ui/LoginPage.vue'),
   },
+  {
+    path: '/create-password',
+    name: routesName.createPassword,
+    component: () => import('@/pages/auth/ui/CreatePasswordPage.vue'),
+    meta: { requiresAuth: true },
+  },
 ]
 
-export { routes }
+export { routes  }

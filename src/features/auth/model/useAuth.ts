@@ -1,11 +1,7 @@
 import { supabase } from '@shared/config'
 import { useRequest } from '@shared/lib'
-
-type SignUpPayload = {
-  email: string
-  password: string
-  firstName: string
-}
+import { type SignUpPayload } from './signUp.schema'
+import { type SignInPayload } from './signIn.schema'
 
 function useAuth() {
   const { loading, errorMessage, handleRequest } = useRequest()
@@ -25,16 +21,24 @@ function useAuth() {
     })
   }
 
-  // const signIn = async ({ email, password }: SignInPayload) => {
-  //   return await handleRequest(async () => {
-  //     const { data, error } = await supabase.auth.signInWithPassword({
-  //       email,
-  //       password,
-  //     })
-  //     if (error) throw error
-  //     return data
-  //   })
-  // }
+  const signIn = async ({ email, password }: SignInPayload) => {
+    return await handleRequest(async () => {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+      if (error) throw error
+      // await loadUser()
+      return data
+    })
+  }
+
+  const signOut = async () => {
+    return await handleRequest(async () => {
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+    })
+  }
 
   // const resetPassword = async (email: string) => {
   //   return await handleRequest(async () => {
@@ -54,7 +58,7 @@ function useAuth() {
   //   })
   // }
 
-  return { signUp, loading, errorMessage }
+  return { signUp, signIn, signOut, loading, errorMessage }
 }
 
 export { useAuth }

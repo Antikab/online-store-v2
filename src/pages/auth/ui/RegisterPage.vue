@@ -4,7 +4,7 @@ import { useForm, useField } from 'vee-validate'
 
 import { routesName } from '@app/router'
 import { signUpSchema } from '@/features/auth/model'
-import { useAuth } from '@/entities/user/api/useAuth'
+import { useAuth } from '@/features/auth/model'
 import { BaseButton } from '@/shared/ui'
 
 const { handleSubmit } = useForm({
@@ -73,6 +73,5 @@ const submitForm = handleSubmit(async ({ email, password, firstName }) => {
   </form>
 
   Already have an account?
-  <RouterLink :to="{ name: routesName.login }" class="text-blue-500">Log in</RouterLink>
+  <RouterLink :to="{ name: routesName.login }" class="text-blue-800">Log in</RouterLink>
 </template>
-arsprosvet@mail.ru
