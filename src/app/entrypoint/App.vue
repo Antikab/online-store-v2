@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
-import { routesName } from '@app/router'
+import { routesName } from '@app/router/routes'
 import { useAuth } from '@/features/auth/model'
 import { useUserStore } from '@/entities/user/model'
 import { BaseButton } from '@/shared/ui'

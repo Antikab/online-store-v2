@@ -3,7 +3,7 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, useField } from 'vee-validate'
 import { useRouter } from 'vue-router'
 
-import { routesName } from '@app/router'
+import { routesName } from '@app/router/routes'
 import { signInSchema } from '@/features/auth/model'
 import { useAuth } from '@/features/auth/model'
 import { BaseButton } from '@/shared/ui'

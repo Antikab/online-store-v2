@@ -1,7 +1,7 @@
 import { HomePage } from '@pages/home'
 import { routesName } from './routesName'
 
-const routes  = [
+const routesConfig = [
   { path: '/', name: routesName.home, component: HomePage },
   {
     path: '/register',
@@ -21,4 +21,4 @@ const routes  = [
   },
 ]
 
-export { routes  }
+export { routesConfig }

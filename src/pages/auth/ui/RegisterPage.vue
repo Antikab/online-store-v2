@@ -2,7 +2,7 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, useField } from 'vee-validate'
 
-import { routesName } from '@app/router'
+import { routesName } from '@app/router/routes'
 import { signUpSchema } from '@/features/auth/model'
 import { useAuth } from '@/features/auth/model'
 import { BaseButton } from '@/shared/ui'

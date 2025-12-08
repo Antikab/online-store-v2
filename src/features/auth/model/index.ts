@@ -1,3 +1,3 @@
-export { signUpSchema, type SignUpPayload } from './signUp.schema'
-export { signInSchema, type SignInPayload } from './signIn.schema'
+export { signUpSchema, type SignUpPayload } from './signUpSchema'
+export { signInSchema, type SignInPayload } from './signInSchema'
 export { useAuth } from './useAuth'

@@ -1,7 +1,7 @@
 import { supabase } from '@shared/config'
 import { useRequest } from '@shared/lib'
-import { type SignUpPayload } from './signUp.schema'
-import { type SignInPayload } from './signIn.schema'
+import { type SignUpPayload } from './signUpSchema'
+import { type SignInPayload } from './signInSchema'
 
 function useAuth() {
   const { loading, errorMessage, handleRequest } = useRequest()

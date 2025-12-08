@@ -1,18 +1,13 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import { routes, routesName } from '@app/router'
-import { supabase } from '@/shared/config'
+import { routesConfig } from '../router/routes'
+import { authGuard, guestGuard } from '../router/guards'
 
 const setupRouter = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: routesConfig,
 })
 
-setupRouter.beforeEach(async (to) => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-
-  if (to.meta.requiresAuth && !session) return { name: routesName.login }
-})
+setupRouter.beforeEach(authGuard)
+setupRouter.beforeEach(guestGuard)
 
 export { setupRouter }
