@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import { routesConfig } from '../router/routes'
-import { authGuard, guestGuard } from '../router/guards'
+import { routesConfig } from '@app/router/routes'
+import { authGuard } from '@app/router/guards'
 
 const setupRouter = createRouter({
   history: createWebHistory(),
@@ -8,6 +8,5 @@ const setupRouter = createRouter({
 })
 
 setupRouter.beforeEach(authGuard)
-setupRouter.beforeEach(guestGuard)
 
 export { setupRouter }

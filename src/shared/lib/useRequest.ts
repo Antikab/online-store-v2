@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { extractErrorMessage } from '@shared/lib'
 
-function useRequest() {
+const useRequest = () => {
   const loading = ref(false)
   const errorMessage = ref('')
 

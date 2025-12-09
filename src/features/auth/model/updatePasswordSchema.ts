@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { signUpSchema } from './signUpSchema'
 
-const createPasswordSchema = signUpSchema
+const updatePasswordSchema = signUpSchema
   .pick({
     password: true,
   })
@@ -13,6 +13,6 @@ const createPasswordSchema = signUpSchema
     path: ['confirmPassword'],
   })
 
-type CreatePasswordPayload = z.infer<typeof createPasswordSchema>
+type UpdatePasswordPayload = z.infer<typeof updatePasswordSchema>
 
-export { createPasswordSchema, type CreatePasswordPayload }
+export { updatePasswordSchema, type UpdatePasswordPayload }

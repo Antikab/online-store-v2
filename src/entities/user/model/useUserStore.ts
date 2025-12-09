@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
 import { type User } from '@supabase/supabase-js'
-import { supabase } from '@/shared/config'
+import { supabase } from '@/shared/config/supabase'
 
 const useUserStore = defineStore('user', () => {
   const user = ref<User | null>(null)
@@ -17,10 +17,6 @@ const useUserStore = defineStore('user', () => {
     user.value = supaUser || null
     ready.value = true
   }
-
-  supabase.auth.onAuthStateChange((_event, session) => {
-    user.value = session?.user || null
-  })
 
   return {
     user,

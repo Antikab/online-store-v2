@@ -2,10 +2,10 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, useField } from 'vee-validate'
 
-import { routesName } from '@app/router/routes'
-import { signUpSchema } from '@/features/auth/model'
-import { useAuth } from '@/features/auth/model'
-import { BaseButton } from '@/shared/ui'
+import { signUpSchema } from '@features/auth/model'
+import { useAuth } from '@features/auth/api'
+import { routesName } from '@/shared/config/router'
+import { BaseButton } from '@shared/ui'
 
 const { handleSubmit } = useForm({
   validationSchema: toTypedSchema(signUpSchema),

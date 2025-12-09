@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, useField } from 'vee-validate'
 
-import { createPasswordSchema } from '@/features/auth/model'
-import { useAuth } from '@/features/auth/model'
+import { updatePasswordSchema } from '@/features/auth/model'
+import { useAuth } from '@/features/auth/api'
+import { clearAuthHash } from '@/shared/lib'
 import { BaseButton } from '@/shared/ui'
 
 const { handleSubmit } = useForm({
-  validationSchema: toTypedSchema(createPasswordSchema),
+  validationSchema: toTypedSchema(updatePasswordSchema),
   initialValues: {
     password: '',
     confirmPassword: '',
@@ -25,6 +27,10 @@ const { updatePassword } = useAuth()
 
 const submitForm = handleSubmit(async ({ password }) => {
   await updatePassword(password)
+})
+
+onMounted(() => {
+  clearAuthHash()
 })
 </script>
 
@@ -53,6 +59,7 @@ const submitForm = handleSubmit(async ({ password }) => {
     <p v-if="confirmPasswordMeta.touched && confirmPasswordError" class="text-sm text-red-500">
       {{ confirmPasswordError }}
     </p>
+
     <BaseButton
       class="w-[167px] h-[54px] flex justify-center items-center bg-purple px-5 py-4 text-white rounded-lg text-18"
       textButton="Reset password"

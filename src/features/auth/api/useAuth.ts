@@ -1,10 +1,14 @@
-import { supabase } from '@shared/config'
-import { useRequest } from '@shared/lib'
-import { type SignUpPayload } from './signUpSchema'
-import { type SignInPayload } from './signInSchema'
+import { useRouter } from 'vue-router'
 
-function useAuth() {
+import { type SignUpPayload, type SignInPayload } from '@features/auth/model'
+import { routesPath, routesName } from '@shared/config/router'
+import { supabase } from '@shared/config/supabase'
+import { useRequest } from '@shared/lib'
+
+const useAuth = () => {
   const { loading, errorMessage, handleRequest } = useRequest()
+  const router = useRouter()
+
   const signUp = async ({ email, password, firstName }: SignUpPayload) => {
     return await handleRequest(async () => {
       const { data, error } = await supabase.auth.signUp({
@@ -17,6 +21,8 @@ function useAuth() {
         .from('authUsers')
         .insert([{ id: data.user?.id, email, name: firstName }])
       if (insertError) throw insertError
+
+      router.replace({ name: routesName.home })
       return data
     })
   }
@@ -28,7 +34,8 @@ function useAuth() {
         password,
       })
       if (error) throw error
-      // await loadUser()
+
+      router.replace({ name: routesName.home })
       return data
     })
   }
@@ -37,6 +44,8 @@ function useAuth() {
     return await handleRequest(async () => {
       const { error } = await supabase.auth.signOut()
       if (error) throw error
+
+      router.replace({ name: routesName.login })
     })
   }
 
@@ -44,21 +53,24 @@ function useAuth() {
     return await handleRequest(async () => {
       const { data, error } = await supabase.auth.updateUser({ password })
       if (error) throw error
+
+      await signOut()
       return data
     })
   }
 
-  // const resetPassword = async (email: string) => {
-  //   return await handleRequest(async () => {
-  //     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-  //       redirectTo: 'http://localhost:5173/reset-password',
-  //     })
-  //     if (error) throw error
-  //     return data
-  //   })
-  // }
+  const resetPassword = async (email: string) => {
+    return await handleRequest(async () => {
+      const origin = window.location.origin
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${origin}${routesPath.updatePassword}`,
+      })
+      if (error) throw error
+      return data
+    })
+  }
 
-  return { signUp, signIn, signOut, updatePassword, loading, errorMessage }
+  return { signUp, signIn, signOut, updatePassword, resetPassword, loading, errorMessage }
 }
 
 export { useAuth }

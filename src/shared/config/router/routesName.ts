@@ -2,7 +2,8 @@ const routesName = {
   home: 'home',
   register: 'register',
   login: 'login',
-  createPassword: 'createPassword',
+  updatePassword: 'updatePassword',
+  resetPassword: 'resetPassword',
 } as const
 
 type RouteName = (typeof routesName)[keyof typeof routesName]

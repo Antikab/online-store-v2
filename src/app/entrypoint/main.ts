@@ -3,12 +3,13 @@ import '@app/styles/main.css'
 import { createApp } from 'vue'
 
 import App from '@app/entrypoint/App.vue'
-import { setupRouter } from '@app/providers/router'
-import { setupPinia } from '@app/providers/pinia'
+import { setupSupabaseAuthListener, setupPinia, setupRouter } from '@app/providers'
 
 const app = createApp(App)
 
-app.use(setupRouter)
 app.use(setupPinia)
+app.use(setupRouter)
+
+setupSupabaseAuthListener()
 
 app.mount('#app')
