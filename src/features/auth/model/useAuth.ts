@@ -40,6 +40,14 @@ function useAuth() {
     })
   }
 
+  const updatePassword = async (password: string) => {
+    return await handleRequest(async () => {
+      const { data, error } = await supabase.auth.updateUser({ password })
+      if (error) throw error
+      return data
+    })
+  }
+
   // const resetPassword = async (email: string) => {
   //   return await handleRequest(async () => {
   //     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -50,15 +58,7 @@ function useAuth() {
   //   })
   // }
 
-  // const updatePassword = async (password: string) => {
-  //   return await handleRequest(async () => {
-  //     const { data, error } = await supabase.auth.updateUser({ password })
-  //     if (error) throw error
-  //     return data
-  //   })
-  // }
-
-  return { signUp, signIn, signOut, loading, errorMessage }
+  return { signUp, signIn, signOut, updatePassword, loading, errorMessage }
 }
 
 export { useAuth }
