@@ -38,8 +38,9 @@ const submitForm = handleSubmit(async ({ email }) => {
     </p>
 
     <BaseButton
-      class="w-[167px] h-[54px] flex justify-center items-center bg-purple px-5 py-4 text-white rounded-lg text-18"
-      textButton="Reset password"
-    />
+      class="h-[54px] flex justify-center items-center bg-purple px-5 py-4 text-white rounded-lg text-18"
+    >
+      Reset password
+    </BaseButton>
   </form>
 </template>

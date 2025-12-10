@@ -16,6 +16,8 @@ body {
 
   /* Цвета */
   --color-purple: #8a33fd;
+  --color-gray: #3c4242;
+
 }
 
 @layer components {

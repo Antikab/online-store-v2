@@ -30,7 +30,7 @@ const handleLogout = async () => {
         Новый пароль
       </RouterLink>
     </nav>
-    <BaseButton v-if="isAuthed" @click="handleLogout" textButton="Выход" class="text-red-800" />
+    <BaseButton v-if="isAuthed" @click="handleLogout" class="text-red-800">Выход</BaseButton>
   </header>
   <div v-else>Загрузка...</div>
 </template>

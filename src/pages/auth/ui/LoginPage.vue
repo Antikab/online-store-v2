@@ -4,9 +4,9 @@ import { useForm, useField } from 'vee-validate'
 
 import { signInSchema } from '@/features/auth/model'
 import { useAuth } from '@/features/auth/api'
+import { GoogleAuthButton } from '@/features/auth/ui'
 import { routesName } from '@/shared/config/router'
 import { BaseButton } from '@/shared/ui'
-
 
 const { handleSubmit } = useForm({
   validationSchema: toTypedSchema(signInSchema),
@@ -19,7 +19,7 @@ const { handleSubmit } = useForm({
 const { value: email, errorMessage: emailError, meta: emailMeta } = useField('email')
 const { value: password, errorMessage: passwordError, meta: passwordMeta } = useField('password')
 
-const { signIn } = useAuth()
+const { signIn, loading } = useAuth()
 
 const submitForm = handleSubmit(async ({ email, password }) => {
   await signIn({ email, password })
@@ -29,6 +29,7 @@ const submitForm = handleSubmit(async ({ email, password }) => {
 <template>
   <div>логин страница</div>
   <form @submit.prevent="submitForm" class="w-fit flex flex-col space-y-4">
+    <GoogleAuthButton />
     <input
       v-model="email"
       @blur="emailMeta.touched = true"
@@ -39,7 +40,7 @@ const submitForm = handleSubmit(async ({ email, password }) => {
     />
     <p v-if="emailMeta.touched && emailError" class="text-sm text-red-500">{{ emailError }}</p>
 
-    <div class="flex flex-col justify-center items-end gap-2">
+    <div class="flex justify-center items-end gap-2">
       <input
         v-model="password"
         @blur="passwordMeta.touched = true"
@@ -48,16 +49,20 @@ const submitForm = handleSubmit(async ({ email, password }) => {
         class="border rounded-lg px-3 py-2"
         :class="{ 'ring-red-300': passwordMeta.touched && passwordError }"
       />
-      <RouterLink :to="{ name: routesName.resetPassword }" class="text-blue-800">Forget your password</RouterLink>
+      <RouterLink :to="{ name: routesName.resetPassword }" class="text-blue-800"
+        >Forget your password</RouterLink
+      >
     </div>
     <p v-if="passwordMeta.touched && passwordError" class="text-sm text-red-500">
       {{ passwordError }}
     </p>
 
     <BaseButton
+      :disabled="loading"
       class="w-[167px] h-[54px] flex justify-center items-center bg-purple px-5 py-4 text-white rounded-lg text-18"
-      textButton="Sign In"
-    />
+    >
+      Sign In
+    </BaseButton>
   </form>
 
   Don't have an account?

@@ -3030,6 +3030,11 @@ vue-eslint-parser@^10.2.0:
     esquery "^1.6.0"
     semver "^7.6.3"
 
+vue-inline-svg@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/vue-inline-svg/-/vue-inline-svg-4.0.1.tgz#da73d8b3032a1d858450382139a2681e17b4ffb7"
+  integrity sha512-yh92MOcTpL/yXj0MjI9JqQpI33nj5ewdddt6enunU8pBpy6JqrMXF+O4WI1DbckhLIoXzp6hSxkeqXDqpqtKXw==
+
 vue-router@^4.6.3:
   version "4.6.3"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.6.3.tgz#52a40a231b910806438a8203c065a411fd3f1faa"

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 interface Props {
-  textButton?: string
+  disabled?: boolean
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <button class="select-none">
-    {{ textButton }}
+  <button :disabled="props.disabled"
+    class="select-none disabled:opacity-50 disabled:pointer-events-none">
+    <slot />
   </button>
 </template>

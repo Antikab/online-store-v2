@@ -49,6 +49,19 @@ const useAuth = () => {
     })
   }
 
+  const signInWithGoogle = async () => {
+    return await handleRequest(async () => {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin,
+        },
+      })
+      if (error) throw error
+      return data
+    })
+  }
+
   const updatePassword = async (password: string) => {
     return await handleRequest(async () => {
       const { data, error } = await supabase.auth.updateUser({ password })
@@ -70,7 +83,16 @@ const useAuth = () => {
     })
   }
 
-  return { signUp, signIn, signOut, updatePassword, resetPassword, loading, errorMessage }
+  return {
+    signUp,
+    signIn,
+    signInWithGoogle,
+    signOut,
+    updatePassword,
+    resetPassword,
+    loading,
+    errorMessage,
+  }
 }
 
 export { useAuth }

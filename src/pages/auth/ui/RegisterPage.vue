@@ -4,6 +4,7 @@ import { useForm, useField } from 'vee-validate'
 
 import { signUpSchema } from '@features/auth/model'
 import { useAuth } from '@features/auth/api'
+import { GoogleAuthButton } from '@/features/auth/ui'
 import { routesName } from '@/shared/config/router'
 import { BaseButton } from '@shared/ui'
 
@@ -34,6 +35,7 @@ const submitForm = handleSubmit(async ({ email, password, firstName }) => {
 <template>
   <div>регистрация страница</div>
   <form @submit.prevent="submitForm" class="w-fit flex flex-col space-y-4">
+    <GoogleAuthButton />
     <input
       v-model="email"
       @blur="emailMeta.touched = true"
@@ -68,8 +70,9 @@ const submitForm = handleSubmit(async ({ email, password, firstName }) => {
     </p>
     <BaseButton
       class="w-[167px] h-[54px] flex justify-center items-center bg-purple px-5 py-4 text-white rounded-lg text-18"
-      textButton="Sign Up"
-    />
+    >
+      Sign Up
+    </BaseButton>
   </form>
 
   Already have an account?
