@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
 import { type User } from '@supabase/supabase-js'
-import { supabase } from '@/shared/config/supabase'
+import { supabase } from '@/shared/config'
 
 const useUserStore = defineStore('user', () => {
   const user = ref<User | null>(null)

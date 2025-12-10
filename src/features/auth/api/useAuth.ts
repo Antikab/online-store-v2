@@ -1,8 +1,8 @@
 import { useRouter } from 'vue-router'
 
 import { type SignUpPayload, type SignInPayload } from '@features/auth/model'
-import { routesPath, routesName } from '@shared/config/router'
-import { supabase } from '@shared/config/supabase'
+import { routesPath, routesName } from '@shared/config'
+import { supabase } from '@shared/config'
 import { useRequest } from '@shared/lib'
 
 const useAuth = () => {

@@ -1,5 +1,5 @@
 import { HomePage } from '@pages/home'
-import { routesName, routesPath } from '@shared/config/router'
+import { routesName, routesPath } from '@shared/config'
 
 const routesConfig = [
   { path: routesPath.home, name: routesName.home, component: HomePage },

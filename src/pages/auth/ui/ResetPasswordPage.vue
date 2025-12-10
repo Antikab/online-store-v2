@@ -2,8 +2,7 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, useField } from 'vee-validate'
 
-import { resetPasswordSchema } from '@/features/auth/model'
-import { useAuth } from '@/features/auth/api'
+import { useAuth, resetPasswordSchema } from '@/features/auth'
 import { BaseButton } from '@/shared/ui'
 
 const { handleSubmit } = useForm({

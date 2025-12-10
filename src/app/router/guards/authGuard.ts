@@ -1,7 +1,7 @@
 import { type NavigationGuard } from 'vue-router'
 
-import { supabase } from '@/shared/config/supabase'
-import { routesName } from '@/shared/config/router'
+import { supabase } from '@/shared/config'
+import { routesName } from '@/shared/config'
 
 const authGuard: NavigationGuard = async (to) => {
   const {

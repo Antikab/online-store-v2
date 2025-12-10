@@ -1,5 +1,5 @@
-import { supabase } from '@/shared/config/supabase'
-import { useUserStore } from '@/entities/user/model'
+import { supabase } from '@/shared/config'
+import { useUserStore } from '@/entities/user'
 
 const setupSupabaseAuthListener = () => {
   supabase.auth.onAuthStateChange((_event, session) => {

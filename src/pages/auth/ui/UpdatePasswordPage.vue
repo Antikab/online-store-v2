@@ -3,8 +3,7 @@ import { onMounted } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, useField } from 'vee-validate'
 
-import { updatePasswordSchema } from '@/features/auth/model'
-import { useAuth } from '@/features/auth/api'
+import { useAuth, updatePasswordSchema } from '@/features/auth'
 import { clearAuthHash } from '@/shared/lib'
 import { BaseButton } from '@/shared/ui'
 

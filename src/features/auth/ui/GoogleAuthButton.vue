@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useAuth } from '@features/auth/api'
+import { useAuth } from '@features/auth'
 import { BaseButton } from '@/shared/ui'
-import { IconGoogle } from '@shared/assets/icons'
+import { IconGoogle } from '@shared/assets'
 
 const googleLoading = ref(false)
 

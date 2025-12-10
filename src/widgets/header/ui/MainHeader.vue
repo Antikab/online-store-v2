@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 
-import { useAuth } from '@/features/auth/api'
-import { useUserStore } from '@/entities/user/model'
-import { routesName } from '@/shared/config/router'
+import { useAuth } from '@/features/auth'
+import { useUserStore } from '@/entities/user'
+import { routesName } from '@/shared/config'
 import { BaseButton } from '@/shared/ui'
 
 const { home, register, login, updatePassword } = routesName
