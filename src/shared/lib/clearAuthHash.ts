@@ -1,10 +1,11 @@
 const clearAuthHash = () => {
-  const hash = window.location.hash
+  const { hash, pathname, search } = window.location
   if (!hash) return
 
   const params = new URLSearchParams(hash.substring(1))
-  if (params.get('access_token')) {
-    window.history.replaceState(null, '', window.location.pathname)
+  if (params.has('access_token')) {
+    const url = pathname + search
+    window.history.replaceState(window.history.state, '', url)
   }
 }
 
