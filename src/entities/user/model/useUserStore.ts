@@ -14,7 +14,7 @@ const useUserStore = defineStore('user', () => {
       data: { user: supaUser },
     } = await supabase.auth.getUser()
 
-    user.value = supaUser || null
+    user.value = supaUser ?? null
     ready.value = true
   }
 

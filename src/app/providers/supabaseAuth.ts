@@ -4,7 +4,7 @@ import { useUserStore } from '@/entities/user'
 const setupSupabaseAuthListener = () => {
   supabase.auth.onAuthStateChange((_event, session) => {
     const userStore = useUserStore()
-    userStore.user = session?.user || null
+    userStore.user = session?.user ?? null
   })
 }
 
