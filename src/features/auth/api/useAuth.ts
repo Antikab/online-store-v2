@@ -17,12 +17,15 @@ const useAuth = () => {
       })
       if (error) throw error
 
+      const userId = data.user?.id
+      if (!userId) throw new Error('User id is missing after signUp')
+
       const { error: insertError } = await supabase
         .from('authUsers')
-        .insert([{ id: data.user?.id, email, name: firstName }])
+        .insert([{ id: userId, email, name: firstName }])
       if (insertError) throw insertError
 
-      router.replace({ name: routesName.home })
+      await router.replace({ name: routesName.home })
       return data
     })
   }
@@ -35,7 +38,7 @@ const useAuth = () => {
       })
       if (error) throw error
 
-      router.replace({ name: routesName.home })
+      await router.replace({ name: routesName.home })
       return data
     })
   }
@@ -45,7 +48,7 @@ const useAuth = () => {
       const { error } = await supabase.auth.signOut()
       if (error) throw error
 
-      router.replace({ name: routesName.login })
+      await router.replace({ name: routesName.login })
     })
   }
 

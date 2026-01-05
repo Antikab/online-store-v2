@@ -9,8 +9,13 @@ const googleLoading = ref(false)
 const { signInWithGoogle } = useAuth()
 
 const handleClick = async () => {
+  if (googleLoading.value) return
   googleLoading.value = true
-  await signInWithGoogle()
+  try {
+    await signInWithGoogle()
+  } finally {
+    googleLoading.value = false
+  }
 }
 </script>
 
