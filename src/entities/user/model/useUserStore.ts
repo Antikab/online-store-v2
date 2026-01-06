@@ -10,12 +10,14 @@ const useUserStore = defineStore('user', () => {
   const isAuthed = computed(() => !!user.value)
 
   const loadUser = async () => {
-    const {
-      data: { user: supaUser },
-    } = await supabase.auth.getUser()
-
-    user.value = supaUser ?? null
-    ready.value = true
+    try {
+      const {
+        data: { user: supaUser },
+      } = await supabase.auth.getUser()
+      user.value = supaUser ?? null
+    } finally {
+      ready.value = true
+    }
   }
 
   return {
