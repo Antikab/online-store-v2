@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, useField } from 'vee-validate'
+import { useRouter } from 'vue-router'
 
 import { useAuth, resetPasswordSchema } from '@/features/auth'
+import { routesName } from '@/shared/config'
 import { BaseButton } from '@/shared/ui'
+
+const router = useRouter()
 
 const { handleSubmit } = useForm({
   validationSchema: toTypedSchema(resetPasswordSchema),
@@ -18,6 +22,7 @@ const { resetPassword } = useAuth()
 
 const submitForm = handleSubmit(async ({ email }) => {
   await resetPassword(email)
+  await router.replace({ name: routesName.login })
 })
 </script>
 

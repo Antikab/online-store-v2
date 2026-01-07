@@ -1,18 +1,20 @@
 import { type NavigationGuard } from 'vue-router'
 
-import { supabase } from '@/shared/config'
 import { routesName } from '@/shared/config'
+import { useUserStore } from '@/entities/user'
 
 const authGuard: NavigationGuard = async (to) => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  const userStore = useUserStore()
 
-  if (to.meta.requiresAuth && !session) {
+  if (!userStore.ready) {
+    await userStore.init()
+  }
+
+  if (to.meta.requiresAuth && !userStore.isAuthed) {
     return { name: routesName.login }
   }
 
-  if ((to.name === routesName.login || to.name === routesName.register) && session) {
+  if ((to.name === routesName.login || to.name === routesName.register) && userStore.isAuthed) {
     return { name: routesName.home }
   }
 }

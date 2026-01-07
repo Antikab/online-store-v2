@@ -3,14 +3,19 @@ import { createApp } from 'vue'
 import App from '@app/entrypoint/App.vue'
 import '@app/styles/main.css'
 
-import { setupSupabaseAuthListener, setupPinia, setupRouter, setupInlineSvg } from '@app/providers'
+import { setupSupabaseAuth, setupPinia, setupRouter, setupInlineSvg } from '@app/providers'
 
-const app = createApp(App)
+const bootstrap = async () => {
+  const app = createApp(App)
 
-app.use(setupPinia)
-app.use(setupRouter)
+  app.use(setupPinia)
 
-setupInlineSvg(app)
-setupSupabaseAuthListener()
+  await setupSupabaseAuth()
 
-app.mount('#app')
+  app.use(setupRouter)
+
+  setupInlineSvg(app)
+  app.mount('#app')
+}
+
+bootstrap()

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, useField } from 'vee-validate'
+import { useRouter } from 'vue-router'
 
 import { useAuth, signInSchema, GoogleAuthButton } from '@/features/auth'
 import { routesName } from '@/shared/config'
 import { BaseButton } from '@/shared/ui'
+
+const router = useRouter()
 
 const { handleSubmit } = useForm({
   validationSchema: toTypedSchema(signInSchema),
@@ -21,6 +24,7 @@ const { signIn, loading } = useAuth()
 
 const submitForm = handleSubmit(async ({ email, password }) => {
   await signIn({ email, password })
+  await router.replace({ name: routesName.home })
 })
 </script>
 

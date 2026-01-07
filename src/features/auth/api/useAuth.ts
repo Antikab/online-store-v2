@@ -1,13 +1,10 @@
-import { useRouter } from 'vue-router'
-
 import { type SignUpPayload, type SignInPayload } from '@features/auth/model'
-import { routesPath, routesName } from '@shared/config'
+import { routesPath } from '@shared/config'
 import { supabase } from '@shared/config'
 import { useRequest } from '@shared/lib'
 
 const useAuth = () => {
   const { loading, errorMessage, handleRequest } = useRequest()
-  const router = useRouter()
 
   const signUp = async ({ email, password, firstName }: SignUpPayload) => {
     return await handleRequest(async () => {
@@ -24,8 +21,6 @@ const useAuth = () => {
         .from('authUsers')
         .insert([{ id: userId, email, name: firstName }])
       if (insertError) throw insertError
-
-      await router.replace({ name: routesName.home })
       return data
     })
   }
@@ -37,8 +32,6 @@ const useAuth = () => {
         password,
       })
       if (error) throw error
-
-      await router.replace({ name: routesName.home })
       return data
     })
   }
@@ -47,8 +40,6 @@ const useAuth = () => {
     return await handleRequest(async () => {
       const { error } = await supabase.auth.signOut()
       if (error) throw error
-
-      await router.replace({ name: routesName.login })
     })
   }
 
@@ -69,8 +60,6 @@ const useAuth = () => {
     return await handleRequest(async () => {
       const { data, error } = await supabase.auth.updateUser({ password })
       if (error) throw error
-
-      await signOut()
       return data
     })
   }

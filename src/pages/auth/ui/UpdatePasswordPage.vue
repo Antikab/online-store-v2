@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, useField } from 'vee-validate'
+import { useRouter } from 'vue-router'
 
 import { useAuth, updatePasswordSchema } from '@/features/auth'
-import { clearAuthHash } from '@/shared/lib'
+import { routesName } from '@/shared/config'
 import { BaseButton } from '@/shared/ui'
+
+const router = useRouter()
 
 const { handleSubmit } = useForm({
   validationSchema: toTypedSchema(updatePasswordSchema),
@@ -22,14 +24,12 @@ const {
   meta: confirmPasswordMeta,
 } = useField('confirmPassword')
 
-const { updatePassword } = useAuth()
+const { updatePassword, signOut } = useAuth()
 
 const submitForm = handleSubmit(async ({ password }) => {
   await updatePassword(password)
-})
-
-onMounted(() => {
-  clearAuthHash()
+  await signOut()
+  await router.replace({ name: routesName.login })
 })
 </script>
 
