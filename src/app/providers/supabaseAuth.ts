@@ -7,11 +7,13 @@ const setupSupabaseAuth = async () => {
 
   await userStore.init()
 
-  supabase.auth.onAuthStateChange((_event, session) => {
+  supabase.auth.onAuthStateChange((event, session) => {
     userStore.setSession(session)
-  })
 
-  clearAuthHash()
+    if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN' || event === 'PASSWORD_RECOVERY') {
+      clearAuthHash()
+    }
+  })
 }
 
 export { setupSupabaseAuth }
