@@ -3,12 +3,8 @@ import { type NavigationGuard } from 'vue-router'
 import { routesName } from '@/shared/config'
 import { useUserStore } from '@/entities/user'
 
-const authGuard: NavigationGuard = async (to) => {
+const authGuard: NavigationGuard = (to) => {
   const userStore = useUserStore()
-
-  if (!userStore.ready) {
-    await userStore.init()
-  }
 
   if (to.meta.requiresAuth && !userStore.isAuthed) {
     return { name: routesName.login }

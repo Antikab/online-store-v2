@@ -5,13 +5,19 @@ import { clearAuthHash } from '@/shared/lib'
 const setupSupabaseAuth = async () => {
   const userStore = useUserStore()
 
-  await userStore.init()
+  await new Promise<void>((resolve) => {
+    const { data: dataSub } = supabase.auth.onAuthStateChange((event, session) => {
+      userStore.setSession(session)
 
-  supabase.auth.onAuthStateChange((event, session) => {
-    userStore.setSession(session)
+      if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN' || event === 'PASSWORD_RECOVERY') {
+        clearAuthHash()
+      }
 
-    if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN' || event === 'PASSWORD_RECOVERY') {
-      clearAuthHash()
+      if (event === 'INITIAL_SESSION') resolve()
+    })
+
+    if (import.meta.hot) {
+      import.meta.hot.dispose(() => dataSub.subscription.unsubscribe())
     }
   })
 }
