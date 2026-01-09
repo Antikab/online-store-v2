@@ -8,19 +8,20 @@ const useAuth = () => {
 
   const signUp = async ({ email, password, firstName }: SignUpPayload) => {
     return await handleRequest(async () => {
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
       })
-      if (error) throw error
+      if (signUpError) throw signUpError
 
       const userId = data.user?.id
       if (!userId) throw new Error('User id is missing after signUp')
 
-      const { error: insertError } = await supabase
-        .from('authUsers')
-        .insert([{ id: userId, email, name: firstName }])
-      if (insertError) throw insertError
+      const { error: updateError } = await supabase
+        .from('auth_users')
+        .update({ name: firstName })
+        .eq('id', userId)
+      if (updateError) throw updateError
       return data
     })
   }
