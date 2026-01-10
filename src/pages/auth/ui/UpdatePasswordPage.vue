@@ -24,7 +24,7 @@ const {
   meta: confirmPasswordMeta,
 } = useField('confirmPassword')
 
-const { updatePassword, signOut } = useAuth()
+const { updatePassword, signOut, loading } = useAuth()
 
 const submitForm = handleSubmit(async ({ password }) => {
   await updatePassword(password)
@@ -60,6 +60,8 @@ const submitForm = handleSubmit(async ({ password }) => {
     </p>
 
     <BaseButton
+      type="submit"
+      :disabled="loading"
       class="w-[167px] h-[54px] flex justify-center items-center bg-purple px-5 py-4 text-white rounded-lg text-18"
     >
       Reset password

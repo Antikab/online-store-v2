@@ -18,7 +18,7 @@ const { handleSubmit } = useForm({
 
 const { value: email, errorMessage: emailError, meta: emailMeta } = useField('email')
 
-const { resetPassword } = useAuth()
+const { resetPassword, loading } = useAuth()
 
 const submitForm = handleSubmit(async ({ email }) => {
   await resetPassword(email)
@@ -42,6 +42,8 @@ const submitForm = handleSubmit(async ({ email }) => {
     </p>
 
     <BaseButton
+      type="submit"
+      :disabled="loading"
       class="h-[54px] flex justify-center items-center bg-purple px-5 py-4 text-white rounded-lg text-18"
     >
       Reset password

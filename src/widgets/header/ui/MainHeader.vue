@@ -12,9 +12,9 @@ const router = useRouter()
 const { home, register, login, updatePassword } = routesName
 
 const userStore = useUserStore()
-const { isAuthed, ready } = storeToRefs(userStore)
+const { isAuthed } = storeToRefs(userStore)
 
-const { signOut } = useAuth()
+const { signOut, loading } = useAuth()
 
 const handleLogout = async () => {
   await signOut()
@@ -23,7 +23,7 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <header v-if="ready" class="flex justify-between">
+  <header class="flex justify-between">
     <nav class="flex gap-5">
       <RouterLink :to="{ name: home }" class="text-blue-800"> Вернуться на главную </RouterLink>
 
@@ -40,7 +40,8 @@ const handleLogout = async () => {
       </RouterLink>
     </nav>
 
-    <BaseButton v-if="isAuthed" @click="handleLogout" class="text-red-800">Выход</BaseButton>
+    <BaseButton :disabled="loading" v-if="isAuthed" @click="handleLogout" class="text-red-800"
+      >Выход</BaseButton
+    >
   </header>
-  <div v-else>Загрузка...</div>
 </template>

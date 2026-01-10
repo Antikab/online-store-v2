@@ -60,6 +60,7 @@ const submitForm = handleSubmit(async ({ email, password }) => {
     </p>
 
     <BaseButton
+      type="submit"
       :disabled="loading"
       class="w-[167px] h-[54px] flex justify-center items-center bg-purple px-5 py-4 text-white rounded-lg text-18"
     >

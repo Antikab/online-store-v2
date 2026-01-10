@@ -26,7 +26,7 @@ const {
   meta: firstNameMeta,
 } = useField('firstName')
 
-const { signUp } = useAuth()
+const { signUp, loading } = useAuth()
 
 const submitForm = handleSubmit(async ({ email, password, firstName }) => {
   await signUp({ email, password, firstName })
@@ -71,6 +71,8 @@ const submitForm = handleSubmit(async ({ email, password, firstName }) => {
       {{ firstNameError }}
     </p>
     <BaseButton
+      type="submit"
+      :disabled="loading"
       class="w-[167px] h-[54px] flex justify-center items-center bg-purple px-5 py-4 text-white rounded-lg text-18"
     >
       Sign Up

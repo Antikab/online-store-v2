@@ -6,7 +6,7 @@ const setupSupabaseAuth = async () => {
   const userStore = useUserStore()
 
   await new Promise<void>((resolve) => {
-    const { data: dataSub } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
       userStore.setSession(session)
 
       if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN' || event === 'PASSWORD_RECOVERY') {
@@ -17,7 +17,7 @@ const setupSupabaseAuth = async () => {
     })
 
     if (import.meta.hot) {
-      import.meta.hot.dispose(() => dataSub.subscription.unsubscribe())
+      import.meta.hot.dispose(() => data.subscription.unsubscribe())
     }
   })
 }
