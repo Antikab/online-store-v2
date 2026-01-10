@@ -6,8 +6,8 @@ import { useRequest } from '@shared/lib'
 const useAuth = () => {
   const { loading, errorMessage, handleRequest } = useRequest()
 
-  const signUp = async ({ email, password, firstName }: SignUpPayload) => {
-    return await handleRequest(async () => {
+  const signUp = ({ email, password, firstName }: SignUpPayload) => {
+    return handleRequest(async () => {
       const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
@@ -26,8 +26,8 @@ const useAuth = () => {
     })
   }
 
-  const signIn = async ({ email, password }: SignInPayload) => {
-    return await handleRequest(async () => {
+  const signIn = ({ email, password }: SignInPayload) => {
+    return handleRequest(async () => {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -37,15 +37,15 @@ const useAuth = () => {
     })
   }
 
-  const signOut = async () => {
-    return await handleRequest(async () => {
+  const signOut = () => {
+    return handleRequest(async () => {
       const { error } = await supabase.auth.signOut()
       if (error) throw error
     })
   }
 
-  const signInWithGoogle = async () => {
-    return await handleRequest(async () => {
+  const signInWithGoogle = () => {
+    return handleRequest(async () => {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -57,16 +57,16 @@ const useAuth = () => {
     })
   }
 
-  const updatePassword = async (password: string) => {
-    return await handleRequest(async () => {
+  const updatePassword = (password: string) => {
+    return handleRequest(async () => {
       const { data, error } = await supabase.auth.updateUser({ password })
       if (error) throw error
       return data
     })
   }
 
-  const resetPassword = async (email: string) => {
-    return await handleRequest(async () => {
+  const resetPassword = (email: string) => {
+    return handleRequest(async () => {
       const origin = window.location.origin
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${origin}${routesPath.updatePassword}`,
