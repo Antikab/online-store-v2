@@ -5,21 +5,25 @@ import { clearAuthHash } from '@/shared/lib'
 const setupSupabaseAuth = async () => {
   const userStore = useUserStore()
 
-  await new Promise<void>((resolve) => {
-    const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      userStore.setSession(session)
+  const { data, error } = await supabase.auth.getSession()
 
-      if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN' || event === 'PASSWORD_RECOVERY') {
-        clearAuthHash()
-      }
+  if (error) {
+    userStore.setSession(null)
+  } else {
+    userStore.setSession(data.session ?? null)
+  }
 
-      if (event === 'INITIAL_SESSION') resolve()
-    })
+  const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+    userStore.setSession(session)
 
-    if (import.meta.hot) {
-      import.meta.hot.dispose(() => data.subscription.unsubscribe())
+    if (event === 'SIGNED_IN' || event === 'PASSWORD_RECOVERY') {
+      clearAuthHash()
     }
   })
+
+  if (import.meta.hot) {
+    import.meta.hot.dispose(() => sub.subscription.unsubscribe())
+  }
 }
 
 export { setupSupabaseAuth }
