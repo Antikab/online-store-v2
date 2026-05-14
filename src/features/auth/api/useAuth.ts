@@ -1,7 +1,8 @@
-import { type SignUpPayload, type SignInPayload } from '@features/auth/model'
 import { routesPath } from '@shared/config'
 import { supabase } from '@shared/config'
 import { useRequest } from '@shared/lib'
+
+import { type SignUpPayload, type SignInPayload } from '../model'
 
 const useAuth = () => {
   const { loading, errorMessage, handleRequest } = useRequest()
