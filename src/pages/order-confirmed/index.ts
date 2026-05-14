@@ -1,0 +1,1 @@
+export { OrderConfirmedPage } from './ui'
