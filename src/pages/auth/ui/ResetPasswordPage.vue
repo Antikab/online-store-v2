@@ -33,6 +33,7 @@ const submitForm = handleSubmit(async ({ email }) => {
       v-model="email"
       @blur="emailMeta.touched = true"
       type="email"
+      autocomplete="email"
       placeholder="designer@gmail.com"
       class="border rounded-lg px-3 py-2"
       :class="{ 'ring-red-300': emailMeta.touched && emailError }"

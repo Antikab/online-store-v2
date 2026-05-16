@@ -1,4 +1,4 @@
-export { GoogleAuthButton } from './ui'
+export { GoogleAuthButton, SignOutButton } from './ui'
 export { useAuth } from './api'
 export {
   signUpSchema,

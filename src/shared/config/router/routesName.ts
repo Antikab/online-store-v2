@@ -1,5 +1,6 @@
 const routesName = {
   home: 'home',
+  catalog: 'catalog',
   catalogMen: 'catalogMen',
   catalogWomen: 'catalogWomen',
   productDetail: 'productDetail',

@@ -1,5 +1,6 @@
 const routesPath = {
   home: '/',
+  catalog: '/catalog',
   catalogMen: '/catalog/men',
   catalogWomen: '/catalog/women',
   productDetail: '/product/:slug',
