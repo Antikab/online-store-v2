@@ -14,6 +14,7 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix --cache",
     "format": "prettier --write src/",
+    "supabase:types": "npx supabase gen types typescript --project-id fcdsigcrcbupqnbsbwwf --schema public > src/shared/api/supabase/database.types.ts",
     "fsd": "steiger ./src"
   },
   "dependencies": {

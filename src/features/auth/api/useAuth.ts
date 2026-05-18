@@ -1,5 +1,5 @@
 import { routesPath } from '@shared/config'
-import { supabase } from '@shared/config'
+import { supabase } from '@shared/api/supabase'
 import { useRequest } from '@shared/lib'
 
 import { type SignUpPayload, type SignInPayload } from '../model'

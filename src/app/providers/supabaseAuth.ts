@@ -1,5 +1,5 @@
 import { useUserStore } from '@/entities/user'
-import { supabase } from '@/shared/config'
+import { supabase } from '@/shared/api/supabase'
 import { clearAuthHash } from '@/shared/lib'
 
 const setupSupabaseAuth = async () => {
