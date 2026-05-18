@@ -5,6 +5,7 @@ import { type RouteLocationRaw, useRoute } from 'vue-router'
 import { useUserStore } from '@/entities/user'
 import logoEuphoriaUrl from '@/shared/assets/logo-euphoria.svg'
 import { routesName } from '@/shared/config'
+import type { HeaderActiveIcon } from '@/shared/config/router/routeMeta.types'
 
 const route = useRoute()
 const userStore = useUserStore()
@@ -12,40 +13,40 @@ const userStore = useUserStore()
 type ShopNavLink = {
   label: string
   to: RouteLocationRaw
-  matchNames: readonly string[]
+  activeRouteNames: readonly string[]
   category?: string | null
 }
 
-const shopNavLinks: readonly ShopNavLink[] = [
+const shopNavLinks = [
   {
     label: 'Shop',
     to: { name: routesName.catalog },
-    matchNames: [routesName.home, routesName.catalog],
+    activeRouteNames: [routesName.home, routesName.catalog],
     category: null,
   },
   {
     label: 'Men',
     to: { name: routesName.catalogMen },
-    matchNames: [routesName.catalogMen],
+    activeRouteNames: [routesName.catalogMen],
   },
   {
     label: 'Women',
     to: { name: routesName.catalogWomen },
-    matchNames: [routesName.catalogWomen],
+    activeRouteNames: [routesName.catalogWomen],
   },
   {
     label: 'Combos',
     to: { name: routesName.catalog, query: { category: 'combos' } },
-    matchNames: [routesName.catalog],
+    activeRouteNames: [routesName.catalog],
     category: 'combos',
   },
   {
     label: 'Joggers',
     to: { name: routesName.catalog, query: { category: 'joggers' } },
-    matchNames: [routesName.catalog],
+    activeRouteNames: [routesName.catalog],
     category: 'joggers',
   },
-] as const
+] as const satisfies readonly ShopNavLink[]
 
 const isAuthHeader = computed(() => route.meta.headerVariant === 'auth')
 const shouldShowShopNav = computed(() => route.meta.headerVariant === 'shop')
@@ -68,11 +69,10 @@ const isRouteActive = (link: ShopNavLink) => {
     return isCatalogPage && category === link.category
   }
 
-  return link.matchNames.includes(String(route.name))
+  return link.activeRouteNames.includes(String(route.name))
 }
 
-const isIconActive = (icon: NonNullable<typeof route.meta.activeIcon>) =>
-  route.meta.activeIcon === icon
+const isIconActive = (icon: HeaderActiveIcon) => route.meta.activeIcon === icon
 </script>
 
 <template>

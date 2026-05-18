@@ -101,7 +101,7 @@ const socialLinks = ['f', 'ig', 't', 'in'] as const
       </section>
 
       <p class="pt-9 text-center text-sm font-bold text-white/90">
-        Copyright (c) 2023 Euphoria Folks Pvt Ltd. All rights reserved.
+        Copyright (c) 2026 Euphoria Folks Pvt Ltd. All rights reserved.
       </p>
     </div>
   </footer>

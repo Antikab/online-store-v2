@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { routesName } from '@/shared/config'
-import { Breadcrumbs } from '@/shared/ui'
+import { Breadcrumbs, type BreadcrumbItem } from '@/shared/ui'
 
 const breadcrumbs = [
   { label: 'Home', to: { name: routesName.home } },
   { label: 'Wishlist' },
-]
+] as const satisfies readonly BreadcrumbItem[]
 </script>
 
 <template>

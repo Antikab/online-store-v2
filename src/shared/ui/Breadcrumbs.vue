@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { type RouteLocationRaw } from 'vue-router'
-
-type BreadcrumbItem = {
-  label: string
-  to?: RouteLocationRaw
-}
+import type { BreadcrumbItem } from './Breadcrumbs.types'
 
 defineProps<{
-  items: BreadcrumbItem[]
+  items: readonly BreadcrumbItem[]
 }>()
 </script>
 

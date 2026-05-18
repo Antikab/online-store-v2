@@ -1,10 +1,11 @@
 import 'vue-router'
+import type { HeaderActiveIcon, HeaderVariant } from '@shared/config/router/routeMeta.types'
 
 declare module 'vue-router' {
   interface RouteMeta {
     requiresAuth?: boolean
-    headerVariant?: 'shop' | 'auth' | 'default'
+    headerVariant?: HeaderVariant
     footer?: boolean
-    activeIcon?: 'wishlist' | 'account' | 'cart'
+    activeIcon?: HeaderActiveIcon
   }
 }
