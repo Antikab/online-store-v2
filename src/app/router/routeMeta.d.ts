@@ -1,5 +1,5 @@
 import 'vue-router'
-import type { HeaderActiveIcon, HeaderVariant } from '@shared/config/router/routeMeta.types'
+import type { HeaderActiveIcon, HeaderVariant } from '@shared/config'
 
 declare module 'vue-router' {
   interface RouteMeta {

@@ -4,8 +4,7 @@ import { type RouteLocationRaw, useRoute } from 'vue-router'
 
 import { useUserStore } from '@/entities/user'
 import logoEuphoriaUrl from '@/shared/assets/logo-euphoria.svg'
-import { routesName } from '@/shared/config'
-import type { HeaderActiveIcon } from '@/shared/config/router/routeMeta.types'
+import { routesName, type HeaderActiveIcon } from '@/shared/config'
 
 const route = useRoute()
 const userStore = useUserStore()

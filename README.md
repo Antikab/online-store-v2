@@ -1,5 +1,16 @@
 # online-store-v2
 
+## Импорты и публичные API
+
+Внешние потребители используют экспорты `index.ts` соответствующего сегмента
+Shared. Например, клиент импортируется из `@/shared/api`, типы маршрутов —
+из `@/shared/config`, базовые компоненты — из `@/shared/ui`.
+Внутренние файлы сегмента используют относительные импорты.
+`export type` обозначает типы, которые не добавляют runtime-зависимость.
+
+Проверка границ FSD: `./node_modules/.bin/steiger ./src --watch=false`.
+При ошибке watcher `EMFILE` в локальном окружении добавьте `CHOKIDAR_USEPOLLING=1`.
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup

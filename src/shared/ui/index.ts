@@ -1,5 +1,5 @@
 import BaseButton from './BaseButton.vue'
-import Breadcrumbs from './Breadcrumbs.vue'
+import BaseBreadcrumbs from './BaseBreadcrumbs.vue'
 
-export { BaseButton, Breadcrumbs }
+export { BaseButton, BaseBreadcrumbs }
 export type { BreadcrumbItem } from './Breadcrumbs.types'
