@@ -1,3 +1,1 @@
-import WishlistPage from './WishlistPage.vue'
-
-export { WishlistPage }
+export { default as WishlistPage } from './WishlistPage.vue'

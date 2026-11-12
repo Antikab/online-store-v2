@@ -1,3 +1,1 @@
-import CatalogPage from './CatalogPage.vue'
-
-export { CatalogPage }
+export { default as CatalogPage } from './CatalogPage.vue'

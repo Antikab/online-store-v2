@@ -1,3 +1,1 @@
-import OrdersPage from './OrdersPage.vue'
-
-export { OrdersPage }
+export { default as OrdersPage } from './OrdersPage.vue'

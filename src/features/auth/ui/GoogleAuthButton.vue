@@ -6,7 +6,7 @@ import { IconGoogle } from '@shared/assets'
 
 const googleLoading = ref(false)
 
-const { signInWithGoogle } = useAuth()
+const { signInWithGoogle, errorMessage } = useAuth()
 
 const handleClick = async () => {
   if (googleLoading.value) return
@@ -14,9 +14,10 @@ const handleClick = async () => {
 
   try {
     await signInWithGoogle()
-  } catch (e) {
+  } catch {
+    // useAuth сохраняет безопасное сообщение для отображения ниже.
+  } finally {
     googleLoading.value = false
-    throw e
   }
 }
 </script>
@@ -30,4 +31,5 @@ const handleClick = async () => {
     <inline-svg class="w-5" :src="IconGoogle" />
     <span>Continue With Google</span>
   </BaseButton>
+  <p v-if="errorMessage" role="alert" class="text-sm text-red-500">{{ errorMessage }}</p>
 </template>

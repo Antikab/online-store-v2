@@ -1,4 +1,2 @@
-import GoogleAuthButton from './GoogleAuthButton.vue'
-import SignOutButton from './SignOutButton.vue'
-
-export { GoogleAuthButton, SignOutButton }
+export { default as GoogleAuthButton } from './GoogleAuthButton.vue'
+export { default as SignOutButton } from './SignOutButton.vue'

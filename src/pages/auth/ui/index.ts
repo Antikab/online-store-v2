@@ -1,6 +1,4 @@
-import LoginPage from './LoginPage.vue'
-import RegisterPage from './RegisterPage.vue'
-import UpdatePasswordPage from './UpdatePasswordPage.vue'
-import ResetPasswordPage from './ResetPasswordPage.vue'
-
-export { LoginPage, RegisterPage, UpdatePasswordPage, ResetPasswordPage }
+export { default as LoginPage } from './LoginPage.vue'
+export { default as RegisterPage } from './RegisterPage.vue'
+export { default as UpdatePasswordPage } from './UpdatePasswordPage.vue'
+export { default as ResetPasswordPage } from './ResetPasswordPage.vue'

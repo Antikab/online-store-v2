@@ -1,3 +1,1 @@
-import OrderConfirmedPage from './OrderConfirmedPage.vue'
-
-export { OrderConfirmedPage }
+export { default as OrderConfirmedPage } from './OrderConfirmedPage.vue'

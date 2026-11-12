@@ -82,7 +82,8 @@ const routesConfig: RouteRecordRaw[] = [
     path: routesPath.updatePassword,
     name: routesName.updatePassword,
     component: () => import('@pages/auth').then(({ UpdatePasswordPage }) => UpdatePasswordPage),
-    meta: { requiresAuth: true, headerVariant: 'auth', footer: false },
+    // Сессию из recovery-ссылки проверяет Supabase; без неё страница показывает помощь.
+    meta: { headerVariant: 'auth', footer: false },
   },
   {
     path: routesPath.resetPassword,

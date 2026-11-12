@@ -6,7 +6,7 @@ const updatePasswordSchema = signUpSchema
     password: true,
   })
   .extend({
-    confirmPassword: z.string().min(6, 'Минимум 6 символов').trim(),
+    confirmPassword: z.string().min(6, 'Минимум 6 символов'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Пароли не совпадают',

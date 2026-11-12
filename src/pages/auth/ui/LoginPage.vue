@@ -1,66 +1,105 @@
 <script setup lang="ts">
-import { toTypedSchema } from '@vee-validate/zod'
-import { useForm, useField } from 'vee-validate'
+import { useForm } from '@tanstack/vue-form'
 import { useRouter } from 'vue-router'
 
 import { useAuth, signInSchema, GoogleAuthButton } from '@/features/auth'
 import { routesName } from '@/shared/config'
-import { BaseButton } from '@/shared/ui'
+import { BaseButton, BaseInput } from '@/shared/ui'
 
 const router = useRouter()
 
-const { handleSubmit } = useForm({
-  validationSchema: toTypedSchema(signInSchema),
-  initialValues: {
+const { signIn, loading, errorMessage } = useAuth()
+
+const form = useForm({
+  defaultValues: {
     email: '',
     password: '',
   },
+  validators: {
+    onChange: signInSchema,
+    onBlur: signInSchema,
+    onSubmit: signInSchema,
+  },
+  onSubmit: async ({ value }) => {
+    try {
+      await signIn(signInSchema.parse(value))
+    } catch {
+      // Ошибка запроса уже сохранена в errorMessage.
+      return
+    }
+    await router.replace({ name: routesName.home })
+  },
 })
 
-const { value: email, errorMessage: emailError, meta: emailMeta } = useField('email')
-const { value: password, errorMessage: passwordError, meta: passwordMeta } = useField('password')
-
-const { signIn, loading } = useAuth()
-
-const submitForm = handleSubmit(async ({ email, password }) => {
-  await signIn({ email, password })
-  await router.replace({ name: routesName.home })
-})
+const hasSubmitted = form.useSelector((state) => state.submissionAttempts > 0)
 </script>
 
 <template>
-  <div>логин страница</div>
-  <form @submit.prevent="submitForm" class="w-fit flex flex-col space-y-4">
+  <h1>Sign in</h1>
+  <form novalidate @submit.prevent="form.handleSubmit()" class="w-fit flex flex-col space-y-4">
     <GoogleAuthButton />
-    <input
-      v-model="email"
-      @blur="emailMeta.touched = true"
-      type="email"
-      autocomplete="email"
-      placeholder="designer@gmail.com"
-      class="border rounded-lg px-3 py-2"
-      :class="{ 'ring-red-300': emailMeta.touched && emailError }"
-    />
-    <p v-if="emailMeta.touched && emailError" class="text-sm text-red-500">{{ emailError }}</p>
+    <form.Field name="email">
+      <template #default="{ field }">
+        <BaseInput
+          :model-value="field.state.value"
+          @update:model-value="field.handleChange"
+          @blur="field.handleBlur"
+          name="email"
+          aria-label="Email"
+          type="email"
+          autocomplete="email"
+          placeholder="designer@gmail.com"
+          class="border rounded-lg px-3 py-2"
+          :class="{
+            'ring-red-300':
+              (field.state.meta.isBlurred || hasSubmitted) && field.state.meta.errors.length > 0,
+          }"
+        />
+        <p
+          v-if="(field.state.meta.isBlurred || hasSubmitted) && field.state.meta.errors.length > 0"
+          class="text-sm text-red-500"
+        >
+          {{ field.state.meta.errors[0]?.message }}
+        </p>
+      </template>
+    </form.Field>
 
-    <div class="flex justify-center items-end gap-2">
-      <input
-        v-model="password"
-        @blur="passwordMeta.touched = true"
-        type="password"
-        autocomplete="current-password"
-        placeholder="Harry934PotteR"
-        class="border rounded-lg px-3 py-2"
-        :class="{ 'ring-red-300': passwordMeta.touched && passwordError }"
-      />
-      <RouterLink :to="{ name: routesName.resetPassword }" class="text-blue-800"
-        >Forget your password</RouterLink
-      >
-    </div>
-    <p v-if="passwordMeta.touched && passwordError" class="text-sm text-red-500">
-      {{ passwordError }}
+    <form.Field name="password">
+      <template #default="{ field }">
+        <div class="flex justify-center items-end gap-2">
+          <BaseInput
+            :model-value="field.state.value"
+            @update:model-value="field.handleChange"
+            @blur="field.handleBlur"
+            name="password"
+            aria-label="Password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Harry934PotteR"
+            class="border rounded-lg px-3 py-2"
+            :class="{
+              'ring-red-300':
+                (field.state.meta.isBlurred || hasSubmitted) && field.state.meta.errors.length > 0,
+            }"
+          />
+          <RouterLink :to="{ name: routesName.resetPassword }" class="text-blue-800">
+            Forgot password?
+          </RouterLink>
+        </div>
+        <p
+          v-if="(field.state.meta.isBlurred || hasSubmitted) && field.state.meta.errors.length > 0"
+          class="text-sm text-red-500"
+        >
+          {{ field.state.meta.errors[0]?.message }}
+        </p>
+      </template>
+    </form.Field>
+
+    <p v-if="errorMessage" role="alert" class="text-sm text-red-500">{{ errorMessage }}</p>
+    <p class="text-sm text-gray/70">
+      Signed up with Google? Continue with Google. To use a password, sign in with Google and set
+      one from your account, or use Forgot password.
     </p>
-
     <BaseButton
       type="submit"
       :disabled="loading"

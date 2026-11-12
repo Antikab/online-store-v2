@@ -1,3 +1,1 @@
-import CheckoutPage from './CheckoutPage.vue'
-
-export { CheckoutPage }
+export { default as CheckoutPage } from './CheckoutPage.vue'

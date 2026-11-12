@@ -1,78 +1,133 @@
 <script setup lang="ts">
-import { toTypedSchema } from '@vee-validate/zod'
-import { useForm, useField } from 'vee-validate'
+import { useForm } from '@tanstack/vue-form'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useAuth, signUpSchema, GoogleAuthButton } from '@features/auth'
 import { routesName } from '@/shared/config'
-import { BaseButton } from '@shared/ui'
+import { BaseButton, BaseInput } from '@shared/ui'
 
 const router = useRouter()
 
-const { handleSubmit } = useForm({
-  validationSchema: toTypedSchema(signUpSchema),
-  initialValues: {
+const { signUp, loading, errorMessage } = useAuth()
+const needsEmailConfirmation = ref(false)
+
+const form = useForm({
+  defaultValues: {
     email: '',
     password: '',
     firstName: '',
   },
-})
-
-const { value: email, errorMessage: emailError, meta: emailMeta } = useField('email')
-const { value: password, errorMessage: passwordError, meta: passwordMeta } = useField('password')
-const {
-  value: firstName,
-  errorMessage: firstNameError,
-  meta: firstNameMeta,
-} = useField('firstName')
-
-const { signUp, loading } = useAuth()
-
-const submitForm = handleSubmit(async ({ email, password, firstName }) => {
-  await signUp({ email, password, firstName })
-  await router.replace({ name: routesName.home })
+  validators: {
+    onChange: signUpSchema,
+    onBlur: signUpSchema,
+    onSubmit: signUpSchema,
+  },
+  onSubmit: async ({ value }) => {
+    try {
+      const data = await signUp(signUpSchema.parse(value))
+      if (!data.session) {
+        needsEmailConfirmation.value = true
+        return
+      }
+    } catch {
+      // Ошибка запроса уже сохранена в errorMessage.
+      return
+    }
+    await router.replace({ name: routesName.home })
+  },
 })
 </script>
 
 <template>
-  <div>регистрация страница</div>
-  <form @submit.prevent="submitForm" class="w-fit flex flex-col space-y-4">
+  <h1>Sign up</h1>
+  <p v-if="needsEmailConfirmation" role="status">
+    Check your inbox to confirm your email. If you already have an account, sign in instead.
+  </p>
+  <form
+    v-else
+    novalidate
+    @submit.prevent="form.handleSubmit()"
+    class="w-fit flex flex-col space-y-4"
+  >
     <GoogleAuthButton />
-    <input
-      v-model="email"
-      @blur="emailMeta.touched = true"
-      type="email"
-      autocomplete="email"
-      placeholder="designer@gmail.com"
-      class="border rounded-lg px-3 py-2"
-      :class="{ 'ring-red-300': emailMeta.touched && emailError }"
-    />
-    <p v-if="emailMeta.touched && emailError" class="text-sm text-red-500">{{ emailError }}</p>
+    <form.Field name="email">
+      <template #default="{ field }">
+        <BaseInput
+          :model-value="field.state.value"
+          @update:model-value="field.handleChange"
+          @blur="field.handleBlur"
+          name="email"
+          aria-label="Email"
+          type="email"
+          autocomplete="email"
+          placeholder="designer@gmail.com"
+          class="border rounded-lg px-3 py-2"
+          :class="{
+            'ring-red-300': field.state.meta.isTouched && field.state.meta.errors.length > 0,
+          }"
+        />
+        <p
+          v-if="field.state.meta.isTouched && field.state.meta.errors.length > 0"
+          class="text-sm text-red-500"
+        >
+          {{ field.state.meta.errors[0]?.message }}
+        </p>
+      </template>
+    </form.Field>
 
-    <input
-      v-model="password"
-      @blur="passwordMeta.touched = true"
-      type="password"
-      autocomplete="new-password"
-      placeholder="Harry934PotteR"
-      class="border rounded-lg px-3 py-2"
-      :class="{ 'ring-red-300': passwordMeta.touched && passwordError }"
-    />
-    <p v-if="passwordMeta.touched && passwordError" class="text-sm text-red-500">
-      {{ passwordError }}
-    </p>
-    <input
-      v-model="firstName"
-      @blur="firstNameMeta.touched = true"
-      type="text"
-      autocomplete="given-name"
-      placeholder="Harry"
-      class="border rounded-lg px-3 py-2"
-      :class="{ 'ring-red-300': firstNameMeta.touched && firstNameError }"
-    />
-    <p v-if="firstNameMeta.touched && firstNameError" class="text-sm text-red-500">
-      {{ firstNameError }}
-    </p>
+    <form.Field name="password">
+      <template #default="{ field }">
+        <BaseInput
+          :model-value="field.state.value"
+          @update:model-value="field.handleChange"
+          @blur="field.handleBlur"
+          name="password"
+          aria-label="Password"
+          type="password"
+          autocomplete="new-password"
+          placeholder="Harry934PotteR"
+          class="border rounded-lg px-3 py-2"
+          :class="{
+            'ring-red-300': field.state.meta.isTouched && field.state.meta.errors.length > 0,
+          }"
+        />
+        <p
+          v-if="field.state.meta.isTouched && field.state.meta.errors.length > 0"
+          class="text-sm text-red-500"
+        >
+          {{ field.state.meta.errors[0]?.message }}
+        </p>
+      </template>
+    </form.Field>
+    <form.Field name="firstName">
+      <template #default="{ field }">
+        <BaseInput
+          :model-value="field.state.value"
+          @update:model-value="field.handleChange"
+          @blur="field.handleBlur"
+          name="firstName"
+          aria-label="First name"
+          type="text"
+          autocomplete="given-name"
+          placeholder="Harry"
+          class="border rounded-lg px-3 py-2"
+          :class="{
+            'ring-red-300': field.state.meta.isTouched && field.state.meta.errors.length > 0,
+          }"
+        />
+        <p
+          v-if="field.state.meta.isTouched && field.state.meta.errors.length > 0"
+          class="text-sm text-red-500"
+        >
+          {{ field.state.meta.errors[0]?.message }}
+        </p>
+      </template>
+    </form.Field>
+    <p v-if="errorMessage" role="alert" class="text-sm text-red-500">{{ errorMessage }}</p>
+    <RouterLink :to="{ name: routesName.resetPassword }" class="text-blue-800">
+      Already have an account but no password? Reset password
+    </RouterLink>
     <BaseButton
       type="submit"
       :disabled="loading"

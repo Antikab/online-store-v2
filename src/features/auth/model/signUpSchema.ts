@@ -7,8 +7,8 @@ const signUpSchema = z.object({
     .toLowerCase()
     .min(1, 'Email обязателен')
     .pipe(z.email('Введите корректный e-mail')),
-  password: z.string().min(6, 'Минимум 6 символов').trim(),
-  firstName: z.string().min(1, 'Имя обязательно').trim(),
+  password: z.string().min(6, 'Минимум 6 символов'),
+  firstName: z.string().trim().min(1, 'Имя обязательно'),
 })
 
 type SignUpPayload = z.infer<typeof signUpSchema>

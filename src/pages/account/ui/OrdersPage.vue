@@ -15,6 +15,9 @@ const breadcrumbs = [
     <BaseBreadcrumbs :items="breadcrumbs" />
     <h1 class="mt-12 text-3xl font-semibold text-gray">My Orders</h1>
     <p class="mt-3 text-gray/70">Orders page placeholder</p>
+    <RouterLink :to="{ name: routesName.updatePassword }" class="mt-6 block text-purple underline">
+      Set or change password
+    </RouterLink>
     <SignOutButton class="mt-6" />
   </section>
 </template>

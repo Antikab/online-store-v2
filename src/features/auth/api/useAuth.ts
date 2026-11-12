@@ -3,26 +3,19 @@ import { supabase } from '@shared/api'
 import { useRequest } from '@shared/lib'
 
 import { type SignUpPayload, type SignInPayload } from '../model'
+import { getAuthErrorMessage } from '../model/getAuthErrorMessage'
 
 const useAuth = () => {
-  const { loading, errorMessage, handleRequest } = useRequest()
+  const { loading, errorMessage, handleRequest } = useRequest(getAuthErrorMessage)
 
   const signUp = ({ email, password, firstName }: SignUpPayload) => {
     return handleRequest(async () => {
       const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
+        options: { data: { name: firstName } },
       })
       if (signUpError) throw signUpError
-
-      const userId = data.user?.id
-      if (!userId) throw new Error('User id is missing after signUp')
-
-      const { error: updateError } = await supabase
-        .from('auth_users')
-        .update({ name: firstName })
-        .eq('id', userId)
-      if (updateError) throw updateError
       return data
     })
   }

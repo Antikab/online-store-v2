@@ -1,3 +1,1 @@
-import MainHeader from './MainHeader.vue'
-
-export { MainHeader }
+export { default as MainHeader } from './MainHeader.vue'

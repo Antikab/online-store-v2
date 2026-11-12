@@ -1,3 +1,1 @@
-import ProductDetailPage from './ProductDetailPage.vue'
-
-export { ProductDetailPage }
+export { default as ProductDetailPage } from './ProductDetailPage.vue'

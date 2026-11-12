@@ -1,7 +1,7 @@
 import { ref } from 'vue'
-import { extractErrorMessage } from '@shared/lib'
+import { extractErrorMessage } from './extractErrorMessage'
 
-const useRequest = () => {
+const useRequest = (getErrorMessage: (error: unknown) => string = extractErrorMessage) => {
   const loading = ref(false)
   const errorMessage = ref('')
 
@@ -11,7 +11,7 @@ const useRequest = () => {
     try {
       return await fn()
     } catch (error: unknown) {
-      errorMessage.value = extractErrorMessage(error)
+      errorMessage.value = getErrorMessage(error)
 
       throw error
     } finally {

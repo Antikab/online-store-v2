@@ -1,3 +1,1 @@
-import MainFooter from './MainFooter.vue'
-
-export { MainFooter }
+export { default as MainFooter } from './MainFooter.vue'
